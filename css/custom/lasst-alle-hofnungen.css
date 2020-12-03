@@ -1,0 +1,53 @@
+p + p:has(> .interstitial) {
+  margin-bottom: 0;
+}
+
+.interstitial {
+  display: block;
+  padding: 2em 2em;
+  background-color: black;
+  text-align: center;
+  color: red;
+  font-size: 2em;
+}
+
+.interstitial.image {
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+  min-height: 900px;
+}
+
+.interstitial.image .text {
+  display: block;
+}
+
+.image.doom_stadt {
+  background-image: url(../Quellen/Lasst%20alle%20Hoffnung%20fahren/doom_stadt.jpg);
+}
+
+.image.doom_baum {
+  background-image: url(../Quellen/Lasst%20alle%20Hoffnung%20fahren/doom_baum.jpg);
+}
+
+.image.doom_wald {
+  background-image: url(../Quellen/Lasst%20alle%20Hoffnung%20fahren/doom_wald.jpg);
+}
+
+.image.doom_eis {
+  background-image: url(../Quellen/Lasst%20alle%20Hoffnung%20fahren/doom_eis.jpg);
+}
+
+.image.doom_demo {
+  background-image: url(../Quellen/Lasst%20alle%20Hoffnung%20fahren/doom_demo.jpg);
+}
+
+.image.doom_menschen {
+  background-image: url(../Quellen/Lasst%20alle%20Hoffnung%20fahren/doom_menschen.jpg);
+}
+
+.image.doom_frau {
+  background-size: contain;
+  background-image: url(../Quellen/Lasst%20alle%20Hoffnung%20fahren/doom_frau.jpg);
+  min-height: 600px;
+}
