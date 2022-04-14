@@ -1,7 +1,18 @@
+# Force HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://moritzz\.ch%{REQUEST_URI} [R,L]
+
+# Markdown Editor
 Options +FollowSymlinks
 RewriteEngine On
 RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} ^(?:.*)?/([^/]+)/?  [NC]
-RewriteRule .*      /docs/?q=%1                     [L]
+RewriteRule .*      /Assaloni/?q=%1                     [L]
+
+# Protect Directory
+AuthName "Assaloni"
+AuthType Basic
+AuthUserFile /home/moritzzc/public_html/moritzz.com/Assaloni/.htpasswd
+Require valid-user
