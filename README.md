@@ -18,7 +18,7 @@ To add custom HTML markup to your Markdown based webpages, you can add any custo
 
 ### Running from a subdirectory on your server
 
-Markdown Publisher comes with a pre-configured `.htacsess` file for clean-URLs. If you run its script from a subdirectory of you server, please add its name to the following line:
+Markdown Publisher comes with a pre-configured `.htaccess` file for clean-URLs. If you run its script from a subdirectory of you server, please add its name to the following line:
 
 Change... `RewriteRule .*      /?q=%1                     [L]`
 ... to: `RewriteRule .*      /mydirectory/?q=%1                     [L]`
