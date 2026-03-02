@@ -48,3 +48,4 @@ If you decide to use Markdown Publisher, it would be kind of nice to mention [Zi
 - 1.4: Several Teaks and feature set extensions
   - Added capability to scan 'Sources' as the main markdown files directory.
   - Added footer with credits to the HTML template and corresponding css rules.
+- 1.5: Added sorting by file modification dates and bash script to set all dates 
