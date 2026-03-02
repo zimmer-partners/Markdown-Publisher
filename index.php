@@ -6,6 +6,7 @@
   
   // Set this to true to force reloading CSS files on every refresh
   $debug = false;
+  $sort_by_date = true;
   
   /* Settings End */
 
@@ -35,19 +36,38 @@
       3 => 'read',
       4 => 'write'
     ];
+    
+    $sort_by_date = true;
 
     $iterator = new \RecursiveIteratorIterator($directory);
 
     $markdown_file_infos = array();
-    $path_pattern = '/^.+(\.' .  implode($md_file_endings, '$|\.') . '$)/';
-    $name_pattern = '/^(.+)(\.' .  implode($md_file_endings, '$|\.') . '$)/';
+    $path_pattern = '/^.+(\.' .  implode('$|\.', $md_file_endings) . '$)/';
+    $name_pattern = '/^(.+)(\.' .  implode('$|\.', $md_file_endings) . '$)/';
     foreach ($iterator as $info) {
       if (preg_match($path_pattern, $info->getPathname(), $matches)) {
         preg_match($name_pattern, $info->getFilename(), $markdown_names);
         $markdown_file_infos[$markdown_names[1]] = $info;
       }
     }
-    array_multisort($markdown_file_infos, SORT_ASC, SORT_NATURAL);
+    
+    if ($_GET['sort'] == 'date-created' || (isset($sort_by_date) && $sort_by_date)) {
+      uasort($markdown_file_infos, function($a, $b) {
+        $atime = date('Y-m-d', $a->getMTime());
+        $btime = date('Y-m-d', $b->getMTime());
+        if ($atime == $btime) {
+          return $a->getFilename() <=> $b->getFilename();
+        } else {
+          if ($_GET['asc-desc'] == 'desc') {
+            return ($atime < $btime) ? -1 : 1;
+          } else {
+            return ($atime < $btime) ? 1 : -1;
+          }
+        }
+      });
+    } else {
+      array_multisort($markdown_file_infos, SORT_ASC, SORT_NATURAL);
+    }
 
     return $markdown_file_infos;
 
@@ -75,7 +95,7 @@
     }
   }
 
-  $script_filename = $_SERVER{'SCRIPT_FILENAME'};
+  $script_filename = $_SERVER['SCRIPT_FILENAME'];
   $script_filepath = preg_replace('/\/[^\.|^\/]*\.php$/i', '', $script_filename);
   
   $markdown_query = isset($_GET['l']) ? $_GET['l'] : $_GET['q'];
@@ -256,7 +276,12 @@
 
     foreach($markdown_file_infos as $file_key => $file_info) {
       $html_link[$file_key]['element'] = clone $list_element;
-      $html_link[$file_key]['link'] = $dom->createElement('a', "{$file_info->getFilename()}");
+      if ($_GET['sort'] == 'date-created' || (isset($sort_by_date) && $sort_by_date)) {
+        $file_date = date('d.m.Y', $file_info->getMTime()) . ': ';
+      } else {
+        $file_date = '';
+      }
+      $html_link[$file_key]['link'] = $dom->createElement('a', "{$file_date}{$file_key}");
       $href = rawurlencode($file_key);
       $html_link[$file_key]['link']->setAttribute('href',"{$href}");
       $html_link[$file_key]['element']->appendChild($html_link[$file_key]['link']);
