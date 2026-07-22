@@ -1,3 +1,13 @@
+@media print {
+  .no-print {
+    display: none;
+  }
+}
+
 .markdown-body blockquote {
   color: #3e3e3e;
+}
+
+.page-break {
+  page-break-before: always;
 }
