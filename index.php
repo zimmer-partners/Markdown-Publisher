@@ -141,7 +141,7 @@
     $script_base = $_SERVER['SCRIPT_URI'];
   }
   
-  if ((isset($markdown_query) && isset($markdown_file_infos[$markdown_name])) || (!isset($markdown_query) && count($markdown_file_infos) == 1)) {
+  if ((isset($markdown_query) && isset($markdown_file_infos[$markdown_name])) || (!isset($markdown_query) && count($markdown_file_infos) == 1) || (!isset($markdown_query) && isset($markdown_file_infos["index"]))) {
     
     // If there's only one file and no query, show the only file
     
@@ -149,7 +149,11 @@
       
       $markdown_name = array_key_first($markdown_file_infos);
       
-    }
+    } else if (!isset($markdown_query) && isset($markdown_file_infos["index"])) {
+      
+      $markdown_name = 'index';
+      
+     }
     
     // Load and convert Markdown
 
